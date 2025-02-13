@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
-import '.styles/Favourites.css';
+import '../styles/Favourites.css';
 
-function FavouritesPage() {
+
+function Favourites() {
   const [favourites, setFavourites] = useState([]);
 
-  // Загружаем список избранных фильмов из localStorage
   useEffect(() => {
     const savedFavourites = JSON.parse(localStorage.getItem("favourites")) || [];
     setFavourites(savedFavourites);
   }, []);
 
-  // Функция удаления фильма из избранного
   const removeFromFavourites = (id) => {
     const updatedFavourites = favourites.filter(movie => movie.id !== id);
     setFavourites(updatedFavourites);
     localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
   };
 
-  // Функция очистки всех избранных фильмов
-  const clearAllFavourites = () => {
+  const clearFavourites = () => {
     setFavourites([]);
     localStorage.removeItem("favourites");
   };
@@ -28,7 +26,7 @@ function FavouritesPage() {
       <h1>Избранные фильмы</h1>
       {favourites.length > 0 ? (
         <>
-          <button className="clear-all-btn" onClick={clearAllFavourites}>Очистить все избранное</button>
+          <button className="clear-all-btn" onClick={clearFavourites}>Очистить все избранное</button>
           <div className="movies-list">
             {favourites.map(movie => (
               <div key={movie.id} className="movie-card">
@@ -46,4 +44,4 @@ function FavouritesPage() {
   );
 }
 
-export default FavouritesPage;
+export default Favourites;
